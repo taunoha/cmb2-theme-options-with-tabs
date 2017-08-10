@@ -71,3 +71,7 @@ add_filter('cmb2_theme_options_tab_tabs', 'cmb2_theme_options_tab_tabs_callback'
 echo ld_get_theme_option('_ld_main_404_title', 'global');
 
 ```
+
+## Screenshots
+
+![Image](screenshot-1.png?raw=true)
