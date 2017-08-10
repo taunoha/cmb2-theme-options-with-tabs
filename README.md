@@ -6,7 +6,7 @@ A simple way to create your own theme options page. This plugin requires [CMB2](
 
 ## Installation
 
-Include cmb-theme-options-tabs library in `functions.php`
+Include cmb-theme-options-tabs library in `functions.php` or use it as WordPress plugin.
 
 ```php
 if( defined('CMB2_LOADED') ) {
