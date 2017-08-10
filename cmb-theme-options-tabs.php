@@ -73,7 +73,7 @@ function cmb2_theme_options_tab_init_callback($fields)
 
     $options = new_cmb2_box( array(
             'id'            => '_ld_theme_option_metaboxes',
-            'title'         => apply_filters('cmb2_options_tab_page_title', sprintf(__('%s options'), wp_get_theme())),
+            'title'         => apply_filters('cmb2_theme_options_tabs_page_title', sprintf(__('%s options'), wp_get_theme())),
             'object_types'  => array('options-page'),
             'option_key'    => '_ld_theme_options',
             'parent_slug'   => 'options-general.php',
