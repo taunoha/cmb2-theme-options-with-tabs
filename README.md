@@ -72,6 +72,6 @@ echo ld_get_theme_option('_ld_main_404_title', 'global');
 
 ```
 
-## Screenshots
+## Screenshot
 
 ![Image](screenshot-1.png?raw=true)
