@@ -22,6 +22,27 @@ function cmb2_ld_theme_options_fields()
             'options' => array(
                 'textarea_rows' => 5
             )
+        ),
+        array(
+            'id'      => '_ld_main_group_example',
+            'type'    => 'group',
+            'options' => array(
+                'group_title'   => 'Entry {#}',
+                'add_button'    => 'Add Another Entry',
+                'remove_button' => 'Remove Entry'
+            ),
+            'fields' => array(
+                array(
+                    'name' => 'Entry Title',
+                    'id'   => 'title',
+                    'type' => 'text',
+                ),
+                array(
+                    'name' => 'Entry Image',
+                    'id'   => 'image',
+                    'type' => 'file'
+                )
+            )
         )
     );
 
