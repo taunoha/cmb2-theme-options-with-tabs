@@ -116,8 +116,16 @@ function ld_get_theme_option($key = 'all', $lang = 'default', $default = false)
         $language = $lang;
     }
 
-    if( function_exists('cmb2_get_option') ) {
-        return cmb2_get_option('_ld_theme_options_' . $language, $key, $default);
+    if( function_exists('cmb2_get_option') )
+    {
+        $options = wp_cache_get($key, '_ld_theme_options_' . $language);
+
+        if( false === $options ) {
+            $options = cmb2_get_option('_ld_theme_options_' . $language, $key, $default);
+            wp_cache_set($key, $options, '_ld_theme_options_' . $language);
+        }
+
+        return $options;
     }
 
     $options = get_option('_ld_theme_options_' . $language);
