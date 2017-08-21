@@ -112,7 +112,7 @@ function ld_get_theme_option($key = 'all', $lang = 'default', $default = false)
         $language = ICL_LANGUAGE_CODE;
     }
 
-    if( !empty($lang) ) {
+    if( 'default' !== $lang ) {
         $language = $lang;
     }
 
