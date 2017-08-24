@@ -54,7 +54,7 @@ echo ld_get_theme_option('_ld_main_404_title');
 ```
 
 If you prefer to define your own tabs just use `cmb2_theme_options_tab_tabs` filter to do this.
-But keep in mind that in this situation you have to add additional parameter to `ld_get_theme_option()` function to get your theme option.
+But keep in mind that in this case you have to add additional parameter to `ld_get_theme_option()` function to get your theme option.
 
 ```php
 function cmb2_theme_options_tab_tabs_callback($tabs)
