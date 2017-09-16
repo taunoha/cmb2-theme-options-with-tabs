@@ -86,7 +86,7 @@ function cmb2_theme_options_tab_init_callback($fields)
 
     foreach( $languages as $code => $data )
     {
-        $code = new_cmb2_box( array(
+        $tab = new_cmb2_box( array(
                 'id'            => '_ld_theme_option_' . $code . '_metaboxes',
                 'title'         => $data['translated_name'],
                 'hookup'        => false,
@@ -97,7 +97,11 @@ function cmb2_theme_options_tab_init_callback($fields)
 
         foreach( $fields as $field )
         {
-            $code->add_field($field);
+            if( isset($field['show_in_tab']) && $code !== $field['show_in_tab'] ) {
+                continue;
+            }
+
+            $tab->add_field($field);
         }
 
     }

@@ -6,6 +6,18 @@ function cmb2_ld_theme_options_fields()
 {
     $fields = array(
         array(
+            'name'    => 'General options',
+            'id'      => '_ld_main_general_box_title',
+            'type'    => 'title',
+            'show_in_tab' => 'en' // Tab slug
+        ),
+        array(
+            'name'    => 'Facebook URL',
+            'id'      => '_ld_general_facebook_url',
+            'type'    => 'text_url',
+            'show_in_tab' => 'en' // Tab slug
+        ),
+        array(
             'name'    => '404 page settings',
             'id'      => '_ld_main_404_box_title',
             'type'    => 'title'
