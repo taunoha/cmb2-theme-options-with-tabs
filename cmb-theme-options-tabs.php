@@ -51,7 +51,7 @@ function cmb2_theme_options_tab_content_callback($cmb)
             <div class="ld-in-page-tab">
                 <div class="nav-tab-wrapper in-page-tab">
                     <?php foreach( $tabs as $code => $tab ) { ?>
-                        <a class="nav-tab <?php echo ( $code == $current_tab ) ? 'nav-tab-active' : ''; ?>" data-toggle="tab" href="<?php echo esc_url(add_query_arg('tab', $code)); ?>"><?php echo $tab['translated_name']; ?></a>
+                        <a class="nav-tab <?php echo ( $code == $current_tab ) ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url(add_query_arg('tab', $code)); ?>"><?php echo $tab['translated_name']; ?></a>
                     <?php $first_tab = false; } ?>
                 </div>
             </div>
