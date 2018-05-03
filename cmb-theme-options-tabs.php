@@ -138,7 +138,6 @@ add_action('cmb2_admin_init', 'cmb2_theme_options_tab_init_callback');
 function ld_get_theme_option($key = 'all', $lang = 'default', $default = false)
 {
     $language = 'default';
-    $options = array();
 
     if( defined('ICL_LANGUAGE_CODE') ) {
         $language = ICL_LANGUAGE_CODE;
@@ -149,9 +148,9 @@ function ld_get_theme_option($key = 'all', $lang = 'default', $default = false)
     }
 
     $option_key = '_ld_theme_options_' . $language;
-    $cache = wp_cache_get($option_key);
+    $options = wp_cache_get($option_key);
 
-    if( false === $cache )
+    if( false === $options )
     {
         $options = get_option($option_key);
         wp_cache_set($option_key, $options);
