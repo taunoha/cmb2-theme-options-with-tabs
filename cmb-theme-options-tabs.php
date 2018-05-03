@@ -2,19 +2,24 @@
 /**
  * Plugin Name: CMB2 Theme Options Page with Tabs
  * Description: A simple way to create your own theme options page. WPML Compatible.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: LOOM Digital
  * Author URI: https://www.loomdigital.ee
  *
  * @package     CMB2
  * @category    WordPress_Plugin
  * @author      LOOM Digital
- * @since       1.0.0
  *
  */
 
 defined('ABSPATH') or die();
 
+/**
+ * Display notification after update
+ *
+ * @since 1.0.0
+ *
+ */
 function cmb2_theme_options_tab_notices()
 {
     if( isset($_POST['object_id']) && strpos($_POST['object_id'], '_ld_theme_options_') !== false )
@@ -24,6 +29,12 @@ function cmb2_theme_options_tab_notices()
 }
 add_action('admin_menu', 'cmb2_theme_options_tab_notices');
 
+/**
+ * Display tabs and their content
+ *
+ * @since 1.0.0
+ *
+ */
 function cmb2_theme_options_tab_content_callback($cmb)
 {
 
@@ -51,7 +62,7 @@ function cmb2_theme_options_tab_content_callback($cmb)
             <div class="ld-in-page-tab">
                 <div class="nav-tab-wrapper in-page-tab">
                     <?php foreach( $tabs as $code => $tab ) { ?>
-                        <a class="nav-tab <?php echo ( $code == $current_tab ) ? 'nav-tab-active' : ''; ?>" data-toggle="tab" href="<?php echo esc_url(add_query_arg('tab', $code)); ?>"><?php echo $tab['translated_name']; ?></a>
+                        <a class="nav-tab <?php echo ( $code == $current_tab ) ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url(add_query_arg('tab', $code)); ?>"><?php echo $tab['translated_name']; ?></a>
                     <?php $first_tab = false; } ?>
                 </div>
             </div>
@@ -61,6 +72,13 @@ function cmb2_theme_options_tab_content_callback($cmb)
     <?php
 }
 
+/**
+ * Create theme option metaboxes
+ *
+ * @since 1.1.0     Disabled the options autoload
+ * @since 1.0.0
+ *
+ */
 function cmb2_theme_options_tab_init_callback($fields)
 {
     if( function_exists('icl_get_languages') ) {
@@ -76,6 +94,7 @@ function cmb2_theme_options_tab_init_callback($fields)
             'id'            => '_ld_theme_option_metaboxes',
             'title'         => apply_filters('cmb2_theme_options_tabs_page_title', sprintf(__('%s options'), wp_get_theme())),
             'object_types'  => array('options-page'),
+            'autoload'      => false,
             'option_key'    => '_ld_theme_options',
             'parent_slug'   => 'options-general.php',
             'display_cb'    => 'cmb2_theme_options_tab_content_callback',
@@ -90,6 +109,7 @@ function cmb2_theme_options_tab_init_callback($fields)
                 'id'            => '_ld_theme_option_' . $code . '_metaboxes',
                 'title'         => $data['translated_name'],
                 'hookup'        => false,
+                'autoload'      => false,
                 'object_types'  => array('options-page'),
                 'option_key'    => '_ld_theme_options_' . $code
             )
@@ -108,35 +128,59 @@ function cmb2_theme_options_tab_init_callback($fields)
 }
 add_action('cmb2_admin_init', 'cmb2_theme_options_tab_init_callback');
 
+/**
+ * Get theme option(s).
+ *
+ * @since 1.1.0     Updated theme option cache handling
+ * @since 1.0.0
+ *
+ */
 function ld_get_theme_option($key = 'all', $lang = 'default', $default = false)
 {
     $language = 'default';
+    $options = array();
 
     if( defined('ICL_LANGUAGE_CODE') ) {
         $language = ICL_LANGUAGE_CODE;
     }
 
-    if( 'default' !== $lang ) {
+    if( !empty($lang) ) {
         $language = $lang;
     }
 
-    if( function_exists('cmb2_get_option') )
+    $option_key = '_ld_theme_options_' . $language;
+    $cache = wp_cache_get($option_key);
+
+    if( false === $cache )
     {
-        $options = wp_cache_get($key, '_ld_theme_options_' . $language);
-
-        if( false === $options ) {
-            $options = cmb2_get_option('_ld_theme_options_' . $language, $key, $default);
-            wp_cache_set($key, $options, '_ld_theme_options_' . $language);
-        }
-
-        return $options;
+        $options = get_option($option_key);
+        wp_cache_set($option_key, $options);
     }
-
-    $options = get_option('_ld_theme_options_' . $language);
 
     if( 'all' !== $key ) {
         return ( isset($options[$key]) ) ? $options[$key] : '';
     }
+
     return $options;
 }
+
+/**
+ * Add theme options link to admin bar menu
+ *
+ * @since 1.1.0
+ *
+ */
+
+function ld_theme_options_admin_bar_menu($wp_admin_bar)
+{
+    $id = sanitize_key( apply_filters('cmb2_theme_options_tabs_page_title', sprintf(__('%s options'), wp_get_theme())) );
+
+    $wp_admin_bar->add_node(array(
+        'parent' => 'site-name',
+        'title' => apply_filters('cmb2_theme_options_tabs_page_title', sprintf(__('%s options'), wp_get_theme())),
+        'href' => esc_url( add_query_arg(array('page' => '_ld_theme_options'), admin_url('options-general.php')) ),
+        'id' => $id
+    ));
+}
+add_action('admin_bar_menu', 'ld_theme_options_admin_bar_menu');
 
