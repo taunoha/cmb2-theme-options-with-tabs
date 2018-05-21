@@ -10,7 +10,7 @@ Include cmb-theme-options-tabs library in `functions.php` or use it as WordPress
 
 ```php
 if( defined('CMB2_LOADED') ) {
-    require_once('cmb-theme-options-tabs/cmb-theme-options-tabs.php');
+    require_once('cmb2-theme-options-tabs/cmb-theme-options-tabs.php');
 }
 ```
 

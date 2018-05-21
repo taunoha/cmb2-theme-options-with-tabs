@@ -2,6 +2,10 @@
 
 defined('ABSPATH') or die();
 
+if( defined('CMB2_LOADED') ) {
+    require_once('cmb2-theme-options-tabs/cmb-theme-options-tabs.php');
+}
+
 function cmb2_ld_theme_options_fields()
 {
     $fields = array(
