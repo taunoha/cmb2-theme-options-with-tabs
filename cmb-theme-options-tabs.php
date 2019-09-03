@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CMB2 Theme Options Page with Tabs
  * Description: A simple way to create your own theme options page. WPML Compatible.
- * Version: 1.1.3
+ * Version: 1.1.4
  * Author: LOOM Digital
  * Author URI: https://www.loomdigital.ee
  *
@@ -39,12 +39,19 @@ function cmb2_theme_options_tab_content_callback($cmb)
 {
 
     $box = $cmb->__get('cmb');
-    $tabs = $box->prop('tabs');
+    /**
+     * Filter tabs before output
+     *
+     * @since 1.1.4
+     *
+     */
+    $tabs = apply_filters('cmb2_theme_options_tabs_pre_output', $box->prop('tabs'));
     $fields = $box->prop('fields');
 
     $current_tab = ( isset($_GET['tab']) ) ? esc_attr($_GET['tab']) : '';
 
-    if( empty($current_tab) ) {
+    if( empty($current_tab) )
+    {
         $first_tab = reset($tabs);
         $current_tab = $first_tab['language_code'];
     }
@@ -137,6 +144,7 @@ add_action('cmb2_admin_init', 'cmb2_theme_options_tab_init_callback');
  */
 function ld_get_theme_option($key = 'all', $lang = 'default')
 {
+    $suffix = $lang;
 
     if( defined('ICL_LANGUAGE_CODE') ) {
         $suffix = ICL_LANGUAGE_CODE;
