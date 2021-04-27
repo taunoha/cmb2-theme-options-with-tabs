@@ -2,7 +2,7 @@
 /**
  * Plugin Name: CMB2 Theme Options Page with Tabs
  * Description: A simple way to create your own theme options page. WPML Compatible.
- * Version: 1.1.4
+ * Version: 1.1.5
  * Author: LOOM Digital
  * Author URI: https://www.loomdigital.ee
  *
