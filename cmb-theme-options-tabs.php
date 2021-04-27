@@ -155,13 +155,7 @@ function ld_get_theme_option($key = 'all', $lang = 'default')
     }
 
     $option_key = '_ld_theme_options_' . $suffix;
-    $options = wp_cache_get($option_key, 'ld-cmb2-theme-options');
-
-    if( false === $options )
-    {
-        $options = map_deep(get_option($option_key, array() ), 'maybe_unserialize');
-        wp_cache_set($option_key, $options, 'ld-cmb2-theme-options');
-    }
+    $options = map_deep(get_option($option_key, array() ), 'maybe_unserialize');
 
     if( 'all' !== $key ) {
         return ( isset($options[$key]) ) ? $options[$key] : '';
@@ -169,6 +163,7 @@ function ld_get_theme_option($key = 'all', $lang = 'default')
 
     return $options;
 }
+
 
 /**
  * Add theme options link to admin bar menu
